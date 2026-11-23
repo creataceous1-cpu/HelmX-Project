@@ -1,0 +1,322 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>HelmX Pro — Rugged Industrial Ore-Scanning Helmet</title>
+<!-- Tailwind CSS CDN with forms and container queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'industrial-yellow': '#F5A623',
+            'industrial-dark': '#111827',
+            'industrial-slate': '#1E293B',
+            'off-white': '#FAFAFA',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+<style data-purpose="custom-layout">
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #FAFAFA;
+      color: #111827;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+</head>
+<body class="bg-stone-50 text-gray-900 min-h-screen flex flex-col justify-between selection:bg-yellow-400 selection:text-black">
+<!-- BEGIN: AnnouncementBar -->
+<div class="w-full bg-[#0F172A] text-stone-200 text-xs sm:text-xs font-semibold tracking-wider py-2.5 px-4 text-center border-b border-slate-800" data-purpose="announcement-bar">
+<div class="max-w-7xl mx-auto flex items-center justify-center space-x-2">
+<span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+<p class="">INDUSTRIAL MINING TECH: CERTIFIED EXPLOSION-PROOF GEAR WITH CODE <span class="text-yellow-400 underline decoration-yellow-400 font-bold tracking-widest">“MINEPRO”</span></p>
+</div>
+</div>
+<!-- END: AnnouncementBar -->
+<!-- BEGIN: MainHeader -->
+<header class="w-full bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm" data-purpose="primary-navigation">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+<!-- Brand Logo -->
+<a class="flex items-center space-x-3 group" href="#">
+<div class="w-10 h-10 rounded-full bg-black flex items-center justify-center text-yellow-400 font-black text-xl shadow">
+          ⚡
+        </div>
+<div class="flex flex-col">
+<span class="text-2xl font-black tracking-tight text-gray-950 uppercase leading-none">Titan Mining</span>
+<span class="text-[10px] tracking-widest uppercase font-semibold text-gray-500 mt-1">Telemetry &amp; Optics Lab</span>
+</div>
+</a>
+<!-- Navigation Links -->
+<nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-600">
+<a class="text-black font-semibold hover:text-gray-900 transition-colors" href="#">Home</a>
+<a class="hover:text-black transition-colors" href="login.html">Live Telemetry Console →</a>
+<a class="hover:text-black transition-colors" href="#">Support</a>
+</nav>
+<!-- Cart and View Controls -->
+<div class="flex items-center space-x-5">
+<a class="flex items-center text-sm font-semibold text-gray-800 hover:text-black group" href="#"><svg class="w-5 h-5 mr-1.5 text-gray-700 group-hover:text-black transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" stroke-linecap="round" stroke-linejoin="round"></path></svg> Cart <span class="ml-1.5 px-1.5 py-0.5 rounded-full bg-stone-100 text-gray-800 text-xs font-bold border border-gray-200 transition-all duration-300" id="cart-count-badge">(0)</span></a>
+<!-- Focus Mode / Fullscreen Mock Icon matching reference top right -->
+<button aria-label="Fullscreen view" class="p-2 text-gray-400 hover:text-gray-700 rounded-lg hover:bg-gray-100 transition-colors border border-gray-200" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainContent -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-grow">
+<!-- BEGIN: PrimaryProductSection -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start pb-16 border-b border-gray-200" data-purpose="product-hero-showcase">
+<!-- Left Column: Thumbnail Strip + Main Image Showcase -->
+<div class="lg:col-span-7 flex flex-col sm:flex-row gap-4">
+<!-- Thumbnail Gallery Strip -->
+<div class="flex sm:flex-col gap-3 order-2 sm:order-1 overflow-x-auto sm:overflow-visible pb-2 sm:pb-0" data-purpose="thumbnail-strip"><button aria-label="Select Front View" class="thumb-btn relative w-16 h-16 sm:w-20 sm:h-20 border-2 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 p-0.5 focus:outline-none is-active border-black" data-alt="Titan HelmX Pro Three-Quarter Angle" data-image-src="helmet.png" type="button" aria-current="true"><img alt="Titan Helmet Front Angle View" class="w-full h-full object-contain pointer-events-none" src="helmet.png"></button><button aria-label="Select Optical Element Close-up" class="thumb-btn relative w-16 h-16 sm:w-20 sm:h-20 border hover:border-gray-500 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 p-0.5 hover:opacity-100 focus:outline-none border-gray-300 opacity-80" data-alt="Concave Lens Sensor Depth View 2" data-image-src="lens.png" type="button"><img alt="Titan Helmet Optical Spectroscopy Element" class="w-full h-full object-cover pointer-events-none" src="lens.png"></button><button aria-label="Select Companion Receiver" class="thumb-btn relative w-16 h-16 sm:w-20 sm:h-20 border hover:border-gray-500 rounded-lg overflow-hidden flex-shrink-0 bg-stone-100 p-0.5 hover:opacity-100 focus:outline-none border-gray-300 opacity-80" data-alt="Companion Field Terminal TR-400X" data-image-src="terminal.png" type="button"><img alt="Connected Field Receiver" class="w-full h-full object-contain pointer-events-none" src="terminal.png"></button></div>
+<!-- Main Product Stage with Left/Right Navigation Arrows -->
+<div class="relative order-1 sm:order-2 flex-1 rounded-xl bg-white border border-gray-200 overflow-hidden shadow-sm flex items-center justify-center p-6 lg:p-10 group" data-purpose="main-photo-stage"><button aria-label="Previous view" class="absolute left-4 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 hover:bg-white text-gray-700 shadow-md border border-gray-200 flex items-center justify-center transition-all z-10 hover:scale-110 active:scale-90 focus:outline-none" id="prev-photo-btn" type="button"><svg class="w-4 h-4 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="relative w-full max-w-lg aspect-4/3 flex items-center justify-center overflow-hidden cursor-crosshair" id="main-photo-wrapper"><img alt="Titan HelmX Pro Three-Quarter Angle" class="w-full h-full object-contain filter drop-shadow-lg transition-all duration-300 ease-out hover:scale-110 select-none" id="main-product-image" src="helmet.png" style="opacity: 1; transform: scale(1);"></div><button aria-label="Next view" class="absolute right-4 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 hover:bg-white text-gray-700 shadow-md border border-gray-200 flex items-center justify-center transition-all z-10 hover:scale-110 active:scale-90 focus:outline-none" id="next-photo-btn" type="button"><svg class="w-4 h-4 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"></path></svg></button></div>
+</div>
+<!-- Right Column: Product Detail & Purchase Action Form -->
+<div class="lg:col-span-5 flex flex-col justify-start space-y-6 pt-2" data-purpose="product-meta-actions">
+<!-- Badge & Primary Headings -->
+<div>
+<div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-900 mb-3">
+            MSHA Class 1 Div 1 Certified
+          </div>
+<h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-gray-950 mb-2">HelmX</h1>
+<h2 class="text-xl sm:text-2xl font-bold text-gray-800 leading-snug">Rugged Industrial Ore-Scanning Mining Helmet</h2>
+</div>
+<!-- Description Paragraph -->
+<p class="text-gray-600 leading-relaxed text-base">
+          Engineered for subterranean geology operations. HelmX pairs high-tensile impact polycarbonate armor with a continuous multispectral ore lens that relays assay telemetry to your exploration terminal.
+        </p>
+<!-- Feature List -->
+<ul class="space-y-2.5 text-gray-700 text-sm font-medium">
+<li class="flex items-center space-x-2">
+<span class="w-2 h-2 rounded-full bg-amber-500"></span>
+<span class="">Industrial-grade sturdiness &amp; reinforced chin harness</span>
+</li>
+<li class="flex items-center space-x-2">
+<span class="w-2 h-2 rounded-full bg-amber-500"></span>
+<span class="">High-intensity 1,200 Lumen multi-LED daylight cluster</span>
+</li>
+<li class="flex items-center space-x-2">
+<span class="w-2 h-2 rounded-full bg-amber-500"></span>
+<span class="">Integrated ore-scanning optical spectroscopy camera</span>
+</li>
+</ul>
+<!-- Price Display -->
+<div class="pt-2">
+<span class="text-3xl font-extrabold tracking-tight text-gray-950"><span style="letter-spacing: -0.75px;" class="">₹5000</span>.00</span>
+<span class="text-xs text-gray-500 block mt-1">Excl. applicable regional mining tariffs &amp; calibration pack</span>
+</div>
+<!-- Quantity & Stock Section -->
+<div class="flex items-center space-x-4 pt-2">
+<!-- Quantity Control -->
+<div class="inline-flex items-center border border-gray-300 rounded-md bg-white shadow-sm overflow-hidden" data-purpose="quantity-selector"><button aria-label="Decrease quantity" class="px-3.5 py-2 text-gray-600 hover:bg-gray-100 active:bg-gray-200 font-semibold text-sm transition-colors focus:outline-none" id="qty-decrement-btn" type="button">−</button><span class="px-4 py-2 text-sm font-semibold text-gray-900 border-x border-gray-200 min-w-[3rem] text-center select-none" id="qty-display">1</span><button aria-label="Increase quantity" class="px-3.5 py-2 text-gray-600 hover:bg-gray-100 active:bg-gray-200 font-semibold text-sm transition-colors focus:outline-none" id="qty-increment-btn" type="button">+</button></div>
+<!-- Stock Indicator -->
+<div class="flex items-center space-x-1.5 text-sm text-gray-600 font-medium">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="">14 in stock — Ready to deploy</span>
+</div>
+</div>
+<!-- Order Button -->
+<div class="pt-2">
+<button class="order-btn w-full sm:w-56 bg-black hover:bg-gray-900 text-white font-bold py-3.5 px-8 rounded-full shadow-md hover:shadow-xl transition-all text-center tracking-wide text-sm active:scale-95 focus:outline-none flex items-center justify-center space-x-2" id="order-action-btn" type="button"><span id="order-btn-text" class="">Order</span></button>
+</div>
+<!-- Compliance & Reassurance Notes -->
+<div class="pt-4 border-t border-gray-200 space-y-2 text-xs text-gray-500 leading-normal">
+<p class="flex items-start space-x-1.5">
+<span class="text-amber-600 font-bold">*</span>
+<span class="">Certified MSHA &amp; ATEX explosion-proof safety rating for underground mining operations.</span>
+</p>
+<p class="flex items-start space-x-1.5">
+<span class="text-amber-600 font-bold">*</span>
+<span class="">Integrated real-time optical spectroscopy camera telemetry linked directly to mesh base stations.</span>
+</p>
+</div>
+</div>
+</section>
+<!-- END: PrimaryProductSection -->
+<!-- BEGIN: CompanionTerminalSection -->
+<section class="py-16" data-purpose="companion-hardware-showcase" id="terminal-section">
+<!-- Section Header -->
+<div class="text-center max-w-3xl mx-auto mb-12">
+<span class="text-xs font-bold tracking-widest text-amber-600 uppercase bg-amber-50 px-3 py-1 rounded-full border border-amber-200">Field Telemetry Suite</span>
+<h2 class="text-3xl sm:text-4xl font-extrabold text-gray-950 mt-3 tracking-tight">
+          Companion Field Terminal
+        </h2>
+<p class="text-base text-gray-600 mt-2">
+          Real-Time Sub-Surface Telemetry &amp; Assay Data Receiver paired natively with the HelmX optical unit.
+        </p>
+</div>
+<!-- Feature Card Container -->
+<div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden grid grid-cols-1 lg:grid-cols-12 items-center">
+<!-- Left Showcase: Handheld Terminal Image -->
+<div class="lg:col-span-6 bg-stone-100 p-8 sm:p-12 flex items-center justify-center border-b lg:border-b-0 lg:border-r border-gray-200 h-full">
+<div class="relative max-w-md w-full"><img alt="Rugged Handheld Industrial Ore Data Terminal" class="w-full h-auto object-contain filter drop-shadow-xl hover:scale-105 transition-transform duration-300" src="terminal.png"><div class="absolute bottom-2 left-2 bg-black/80 backdrop-blur-sm text-yellow-400 text-[11px] font-mono font-medium px-3 py-1.5 rounded border border-yellow-500/30 flex items-center space-x-2"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span><span class="">FIELD TERMINAL TR-400X</span></div></div>
+</div>
+<!-- Right Showcase: Telemetry Specs & Mineral Matrix Details -->
+<div class="lg:col-span-6 p-8 sm:p-12 space-y-6">
+<div>
+<h3 class="text-2xl font-bold text-gray-900 tracking-tight">Instant Sub-Surface Spectral Analysis</h3>
+<p class="text-sm text-gray-600 mt-2 leading-relaxed">
+              Eliminate laboratory turnaround lag. The companion terminal captures live telemetry directly from the HelmX head unit over an encrypted Sub-GHz mesh radio connection.
+            </p>
+</div>
+<!-- Feature Breakdown Grid -->
+<div class="space-y-4"><div class="spec-item flex items-start space-x-3.5 p-3 rounded-xl border border-transparent hover:border-amber-200 transition-all"><div class="spec-badge w-8 h-8 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center flex-shrink-0 font-bold text-sm shadow-sm">01</div><div><h4 class="text-sm font-bold text-gray-900">High-Contrast Transflective Screen</h4><p class="text-xs text-gray-600 mt-0.5 leading-normal">Outdoor-readable monochromatic display legible in pitch black tunnels and under direct 80,000-lux sunlight.</p></div></div><div class="spec-item flex items-start space-x-3.5 p-3 rounded-xl border border-transparent hover:border-amber-200 transition-all"><div class="spec-badge w-8 h-8 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center flex-shrink-0 font-bold text-sm shadow-sm">02</div><div><div class="flex items-center space-x-2"><h4 class="text-sm font-bold text-gray-900">Live Mineral Scan Readout</h4><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span></span></div><p class="text-xs text-gray-600 mt-0.5 leading-normal">Quantifies Quartz, Pyrite, Chalcopyrite, Gold Fe ppm, and rock density matrix instantly at drill faces.</p></div></div><div class="spec-item flex items-start space-x-3.5 p-3 rounded-xl border border-transparent hover:border-amber-200 transition-all"><div class="spec-badge w-8 h-8 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center flex-shrink-0 font-bold text-sm shadow-sm">03</div><div><h4 class="text-sm font-bold text-gray-900">IP68 Submersible Reinforced Enclosure</h4><p class="text-xs text-gray-600 mt-0.5 leading-normal">Tough black rubber bumpers engineered to withstand 3-meter drops onto blasted granite and wet shaft slime.</p></div></div></div>
+<!-- Quick Specs Badge Row -->
+<div class="pt-4 border-t border-gray-100 grid grid-cols-3 gap-3 text-center"><div class="metric-badge bg-gray-50 p-3 rounded-lg border border-gray-200 cursor-default"><span class="block text-xs text-gray-500 font-medium">Battery Life</span><span class="text-sm font-bold text-gray-900">36 Hours</span></div><div class="metric-badge bg-gray-50 p-3 rounded-lg border border-gray-200 cursor-default"><span class="block text-xs text-gray-500 font-medium">Mesh Link</span><span class="text-sm font-bold text-gray-900">LoraWAN 868/915</span></div><div class="metric-badge bg-gray-50 p-3 rounded-lg border border-gray-200 cursor-default"><span class="block text-xs text-gray-500 font-medium">Rating Temp</span><span class="text-sm font-bold text-gray-900">-40°C to +75°C</span></div></div>
+</div>
+</div>
+</section>
+<!-- END: CompanionTerminalSection -->
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: MainFooter -->
+<footer class="w-full bg-white border-t border-gray-200 py-8" data-purpose="page-footer">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 space-y-4 sm:space-y-0">
+<div class="flex items-center space-x-2">
+<span class="font-bold text-gray-800">TITAN MINING INSTRUMENTS INC.</span>
+</div>
+<div class="flex items-center space-x-6">
+<a class="hover:text-black" href="#">Safety Compliance</a>
+<a class="hover:text-black" href="#">ATEX Docs</a>
+<a class="hover:text-black" href="#">Calibration Portal</a>
+<a class="hover:text-black" href="#">Terms of Supply</a>
+</div>
+</div>
+</footer>
+<!-- END: MainFooter -->
+<!-- BEGIN: FloatingSupportWidget -->
+<aside class="fixed bottom-6 right-6 z-50" data-purpose="floating-chat-bubble"><button aria-label="Open support chat" class="floating-chat-anim flex items-center space-x-2 bg-[#6941C6] hover:bg-[#592AC0] text-white px-4 py-2.5 rounded-full shadow-xl transition-all hover:scale-105 active:scale-95 group focus:outline-none" id="support-chat-btn" type="button"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400 border border-white"></span><span class="text-sm font-semibold tracking-wide">Chat</span><svg class="w-4 h-4 ml-0.5 fill-current" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"></path></svg></button></aside>
+<!-- END: FloatingSupportWidget -->
+<script>
+(function() {
+  const thumbButtons = Array.from(document.querySelectorAll('.thumb-btn'));
+  const mainImg = document.getElementById('main-product-image');
+  const prevBtn = document.getElementById('prev-photo-btn');
+  const nextBtn = document.getElementById('next-photo-btn');
+  let currentIndex = 0;
+
+  function setActiveIndex(newIdx) {
+    if (newIdx < 0) newIdx = thumbButtons.length - 1;
+    if (newIdx >= thumbButtons.length) newIdx = 0;
+    currentIndex = newIdx;
+
+    thumbButtons.forEach((btn, idx) => {
+      if (idx === currentIndex) {
+        btn.classList.add('is-active', 'border-black');
+        btn.classList.remove('border-gray-300', 'opacity-80');
+        btn.setAttribute('aria-current', 'true');
+      } else {
+        btn.classList.remove('is-active', 'border-black');
+        btn.classList.add('border-gray-300', 'opacity-80');
+        btn.removeAttribute('aria-current');
+      }
+    });
+
+    const targetBtn = thumbButtons[currentIndex];
+    if (targetBtn && mainImg) {
+      mainImg.style.opacity = '0';
+      mainImg.style.transform = 'scale(0.96)';
+      setTimeout(() => {
+        mainImg.src = targetBtn.getAttribute('data-image-src') || targetBtn.querySelector('img').src;
+        mainImg.alt = targetBtn.getAttribute('data-alt') || 'Product view';
+        mainImg.style.opacity = '1';
+        mainImg.style.transform = 'scale(1)';
+      }, 150);
+    }
+  }
+
+  thumbButtons.forEach((btn, idx) => {
+    btn.addEventListener('click', () => setActiveIndex(idx));
+  });
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => setActiveIndex(currentIndex - 1));
+  }
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => setActiveIndex(currentIndex + 1));
+  }
+
+  // Quantity controls
+  const qtyDisplay = document.getElementById('qty-display');
+  const decrementBtn = document.getElementById('qty-decrement-btn');
+  const incrementBtn = document.getElementById('qty-increment-btn');
+  let currentQty = 1;
+
+  if (decrementBtn && qtyDisplay) {
+    decrementBtn.addEventListener('click', () => {
+      if (currentQty > 1) {
+        currentQty--;
+        qtyDisplay.textContent = currentQty;
+        qtyDisplay.style.transform = 'scale(1.2)';
+        setTimeout(() => { qtyDisplay.style.transform = 'scale(1)'; }, 150);
+      }
+    });
+  }
+  if (incrementBtn && qtyDisplay) {
+    incrementBtn.addEventListener('click', () => {
+      currentQty++;
+      qtyDisplay.textContent = currentQty;
+      qtyDisplay.style.transform = 'scale(1.2)';
+      setTimeout(() => { qtyDisplay.style.transform = 'scale(1)'; }, 150);
+    });
+  }
+
+  // Order button feedback & Cart update
+  const orderBtn = document.getElementById('order-action-btn');
+  const orderText = document.getElementById('order-btn-text');
+  const cartBadge = document.getElementById('cart-count-badge');
+  let cartTotal = 0;
+  let isSubmitting = false;
+
+  if (orderBtn && orderText) {
+    orderBtn.addEventListener('click', () => {
+      if (isSubmitting) return;
+      isSubmitting = true;
+      orderBtn.disabled = true;
+      orderText.textContent = 'Adding to Cart...';
+      orderBtn.classList.add('bg-stone-800');
+
+      setTimeout(() => {
+        cartTotal += currentQty;
+        if (cartBadge) {
+          cartBadge.textContent = '(' + cartTotal + ')';
+          cartBadge.classList.add('bg-amber-400', 'text-black', 'scale-125');
+          setTimeout(() => {
+            cartBadge.classList.remove('scale-125');
+          }, 300);
+        }
+        orderText.innerHTML = 'Added to Cart ✓';
+        orderBtn.classList.remove('bg-stone-800', 'bg-black');
+        orderBtn.classList.add('bg-emerald-600');
+
+        setTimeout(() => {
+          orderText.textContent = 'Order';
+          orderBtn.classList.remove('bg-emerald-600');
+          orderBtn.classList.add('bg-black');
+          orderBtn.disabled = false;
+          isSubmitting = false;
+        }, 1800);
+      }, 600);
+    });
+  }
+})();
+</script>
+
+<script src="app.js"></script>
+</body></html>

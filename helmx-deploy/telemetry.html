@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HelmX Unique Unit Telemetry &amp; Dual-Stream Sync Console</title>
+<!-- Tailwind CSS v3 CDN with forms and container queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            creme: {
+              50: '#FAF9F6',
+              100: '#F7F6F2',
+              200: '#EFECE6',
+              300: '#E6E2DA',
+              400: '#D9D4C7'
+            },
+            amber: {
+              500: '#F59E0B',
+              600: '#D97706',
+              700: '#B45309'
+            },
+            industrial: {
+              charcoal: '#18181B',
+              slate: '#27272A',
+              muted: '#71717A'
+            }
+          },
+          fontFamily: {
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
+            sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Style Declarations -->
+<style data-purpose="base-styling">
+    /* Subtle dot grid pattern for high-precision technical feel */
+    .bg-tech-grid {
+      background-image: radial-gradient(#D9D4C7 0.85px, transparent 0.85px);
+      background-size: 16px 16px;
+    }
+    /* Industrial LCD simulated backlight styling */
+    .lcd-screen-amber {
+      background: linear-gradient(180deg, #b8860b 0%, #a47608 100%);
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.45);
+    }
+    .lcd-text {
+      color: #1a1400;
+      text-shadow: 0 1px 0 rgba(255, 235, 140, 0.25);
+    }
+  </style>
+<style data-purpose="custom-animations">
+    @keyframes pulse-subtle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.05); }
+    }
+    .pulse-dot {
+      animation: pulse-subtle 2s infinite ease-in-out;
+    }
+  </style>
+<!-- END: Style Declarations -->
+</head>
+<body class="bg-creme-100 text-industrial-charcoal font-sans min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-white bg-tech-grid">
+<!-- BEGIN: MainHeader -->
+<header class="bg-white border-b border-creme-300 shadow-sm sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
+<!-- Brand & Status Pill -->
+<div class="flex items-center space-x-3.5">
+<div class="flex items-center space-x-2">
+<!-- Industrial Hexagon Icon -->
+<div class="w-9 h-9 rounded-lg bg-industrial-charcoal flex items-center justify-center text-amber-500 font-black tracking-tighter text-lg shadow-sm border border-stone-800">
+            HX
+          </div>
+<div>
+<div class="flex items-center space-x-2">
+<a href="index.html" class="text-xs font-bold text-amber-600 hover:underline mr-3">← Back to Store</a>
+<span class="font-bold text-base tracking-wide text-industrial-charcoal">HELMX OREASSAY LINK</span>
+<span class="text-[10px] uppercase font-mono px-1.5 py-0.5 bg-stone-100 border border-stone-300 rounded text-stone-600 font-semibold">v4.82-REVC</span>
+</div>
+<p class="text-[11px] text-industrial-muted font-medium flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-emerald-500 pulse-dot inline-block"></span>
+              SUB-GHZ TX ACTIVE • LoRaWAN 915.20 MHz
+            </p>
+</div>
+</div>
+</div>
+<!-- Unique Helmet Target Unit Selector & Hardware ID -->
+<div class="flex items-center space-x-3 bg-creme-50 border border-creme-300 rounded-lg p-1.5 px-3">
+<div class="text-stone-400">
+<svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div>
+<span class="text-[10px] block font-mono uppercase tracking-wider text-industrial-muted leading-tight">Target Helmet Unit Link</span>
+<select class="bg-transparent border-0 p-0 text-xs font-semibold text-industrial-charcoal focus:ring-0 cursor-pointer">
+<option selected="">HX-8492 (Operator: M. Vance - Shaft 4A, Sub-L3)</option>
+<option>HX-8493 (Operator: T. Reyes - Shaft 4B, Incline)</option>
+<option>HX-7101 (Operator: K. Novak - Stope 2, Drift North)</option>
+</select>
+</div>
+<div class="border-l border-creme-300 pl-3 hidden md:block">
+<span class="text-[10px] block font-mono text-industrial-muted">MAC / HARDWARE ID</span>
+<span class="font-mono text-xs font-semibold text-stone-700">0x7A:4E:91:FF:84:92</span>
+</div>
+</div>
+<!-- Live RF Signal Metrics & ATEX Status -->
+<div class="hidden xl:flex items-center space-x-4 border-x border-creme-300 px-4">
+<div class="text-right font-mono">
+<span class="text-[10px] uppercase text-stone-400 block leading-tight">Band &amp; Modulation</span>
+<span class="text-xs font-bold text-stone-700">915.20 MHz FSK</span>
+</div>
+<div class="text-right font-mono">
+<span class="text-[10px] uppercase text-stone-400 block leading-tight">Carrier RSSI</span>
+<span class="text-xs font-bold text-emerald-600">-68 dBm</span>
+</div>
+<div class="text-right font-mono">
+<span class="text-[10px] uppercase text-stone-400 block leading-tight">Pkt Loss</span>
+<span class="text-xs font-bold text-stone-700">0.02%</span>
+</div>
+<div class="pl-1">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-50 text-amber-800 border border-amber-300">
+            ATEX ZONE 0
+          </span>
+</div>
+</div>
+<!-- Action Button -->
+<div class="flex items-center">
+<button class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-stone-900 font-bold px-4 py-2 rounded-lg text-xs tracking-wide shadow-sm transition-colors uppercase border border-amber-400" type="button">
+<svg class="w-4 h-4 text-stone-900" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path>
+</svg>
+          Push Packet Sync
+        </button>
+</div>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainContent -->
+<main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+<!-- ==========================================
+           LEFT COLUMN: FIELD HANDHELD TERMINAL DIRECT SYNC
+           ========================================== -->
+<section class="lg:col-span-5 flex flex-col gap-4" data-purpose="handheld-sync-terminal">
+<div class="bg-white rounded-xl border border-creme-300 shadow-sm p-5 flex flex-col h-full">
+<!-- Card Header -->
+<div class="flex items-start justify-between pb-3.5 border-b border-creme-200 mb-4">
+<div>
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-amber-500 ring-4 ring-amber-100"></span>
+<h2 class="text-xs font-bold font-mono tracking-wider uppercase text-industrial-charcoal">
+                  Field Handheld Terminal Direct Sync
+                </h2>
+</div>
+<p class="text-[11px] font-mono text-stone-500 mt-1">
+                DEVICE: <strong class="text-stone-800">TR-400X INDUSTRIAL CORE</strong> • SYNC: <span class="text-amber-700 font-semibold">LoRa-MESH 0x7A</span>
+</p>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+              DIRECT BUS ONLINE
+            </span>
+</div>
+<!-- Rugged Casing Presentation Container -->
+<div class="bg-creme-100 rounded-xl p-4 border border-creme-300 flex flex-col items-center justify-center shadow-inner relative overflow-hidden">
+<!-- Handheld Physical Shell (High Precision Industrial Enclosure) -->
+<div class="w-full max-w-sm bg-industrial-slate rounded-3xl p-3 border-4 border-stone-800 shadow-2xl relative">
+<!-- Top Antenna & Lanyard Lugs -->
+<div class="absolute -top-3 left-8 w-4 h-3 bg-stone-700 rounded-t-sm border border-stone-900"></div>
+<div class="absolute -top-6 left-9 w-2 h-4 bg-stone-800 rounded-t-full"></div>
+<!-- Amber Corner Protectors -->
+<div class="w-full bg-amber-500 rounded-2xl p-2.5 shadow-md border border-amber-400 relative">
+<!-- Internal LCD Screen Frame -->
+<div class="bg-stone-900 p-2 rounded-xl shadow-inner border border-stone-800">
+<!-- LCD Transflective Amber Matrix Display -->
+<div class="lcd-screen-amber rounded-lg p-3 font-mono text-[11px] leading-tight lcd-text select-none border border-amber-800">
+<!-- LCD Top Status Line -->
+<div class="flex items-center justify-between pb-1.5 border-b border-amber-950/25 mb-2 font-bold tracking-tight">
+<span>SCAN RESULT - SITE 4A</span>
+<span class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-stone-900"></span> 915MHZ
+                      </span>
+</div>
+<!-- LCD Mineral Breakdown Table -->
+<div class="space-y-1">
+<div class="grid grid-cols-4 font-bold text-[9px] uppercase border-b border-amber-950/20 pb-0.5 text-stone-900">
+<span>MINERAL</span>
+<span class="text-right">ORE %</span>
+<span class="text-right">Fe ppm</span>
+<span class="text-right">DENS</span>
+</div>
+<div class="grid grid-cols-4 pt-1 font-semibold text-stone-950">
+<span>Quartz</span>
+<span class="text-right">45%</span>
+<span class="text-right">520</span>
+<span class="text-right">2.65</span>
+</div>
+<div class="grid grid-cols-4 font-semibold text-stone-950">
+<span>Pyrite</span>
+<span class="text-right">30%</span>
+<span class="text-right">8500</span>
+<span class="text-right">5.01</span>
+</div>
+<div class="grid grid-cols-4 font-semibold text-stone-950">
+<span>Chalcopyrite</span>
+<span class="text-right">15%</span>
+<span class="text-right">3100</span>
+<span class="text-right">4.19</span>
+</div>
+<!-- Gold Anomaly Highlighting -->
+<div class="grid grid-cols-4 font-black bg-stone-900/10 px-0.5 rounded text-amber-950 py-0.5 border-y border-stone-900/20">
+<span>Gold (Au)</span>
+<span class="text-right">0.100%</span>
+<span class="text-right">15</span>
+<span class="text-right">19.32</span>
+</div>
+</div>
+<!-- LCD Density Metric & Sync Timestamp -->
+<div class="mt-2.5 pt-1.5 border-t border-amber-950/25 flex items-center justify-between text-[9.5px] font-bold">
+<span>Bulk Density:</span>
+<span>2.85 g/cm³</span>
+</div>
+<div class="flex items-center justify-between text-[8.5px] pt-1 text-stone-900 opacity-90">
+<span>Link: HX-8492</span>
+<span>Sync: Just now</span>
+<span>Bat: 94%</span>
+</div>
+</div>
+</div>
+<!-- Industrial D-Pad & Control Keypad -->
+<div class="mt-3 grid grid-cols-3 gap-2 items-center justify-items-center px-3 py-1">
+<button class="w-10 h-7 rounded bg-stone-800 shadow text-amber-400 font-bold text-[10px] flex items-center justify-center border-b-2 border-stone-950 hover:bg-stone-700 active:translate-y-0.5" type="button">F1</button>
+<div class="flex flex-col items-center gap-1">
+<div class="w-6 h-5 rounded-t bg-stone-900 text-stone-200 flex items-center justify-center text-[9px]">▲</div>
+<div class="flex gap-1">
+<div class="w-5 h-5 rounded-l bg-stone-900 text-stone-200 flex items-center justify-center text-[9px]">◀</div>
+<div class="w-5 h-5 bg-amber-600 text-stone-950 font-bold flex items-center justify-center text-[8px] rounded-sm">OK</div>
+<div class="w-5 h-5 rounded-r bg-stone-900 text-stone-200 flex items-center justify-center text-[9px]">▶</div>
+</div>
+<div class="w-6 h-5 rounded-b bg-stone-900 text-stone-200 flex items-center justify-center text-[9px]">▼</div>
+</div>
+<button class="w-10 h-7 rounded bg-stone-800 shadow text-amber-400 font-bold text-[10px] flex items-center justify-center border-b-2 border-stone-950 hover:bg-stone-700 active:translate-y-0.5" type="button">F2</button>
+</div>
+<!-- Handheld Bottom Tactical Buttons -->
+<div class="mt-2 grid grid-cols-3 gap-1.5 text-center">
+<span class="py-1 rounded bg-stone-900 text-white text-[9px] font-mono font-bold tracking-wider uppercase shadow-inner">SCAN</span>
+<span class="py-1 rounded bg-stone-800 text-stone-200 text-[9px] font-mono font-bold tracking-wider uppercase shadow-inner">BACK</span>
+<span class="py-1 rounded bg-amber-700 text-white text-[9px] font-mono font-bold tracking-wider uppercase shadow-inner">ENTER</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Handheld Hardware Telemetry Status Strip -->
+<div class="mt-4 grid grid-cols-3 gap-2 py-2 px-3 bg-creme-50 rounded-lg border border-creme-300 font-mono text-center">
+<div>
+<span class="text-[10px] text-stone-500 uppercase block">Radio RX</span>
+<span class="text-xs font-bold text-emerald-700">BUFFER: OK</span>
+</div>
+<div class="border-x border-creme-300">
+<span class="text-[10px] text-stone-500 uppercase block">Frame Latency</span>
+<span class="text-xs font-bold text-amber-600">14ms</span>
+</div>
+<div>
+<span class="text-[10px] text-stone-500 uppercase block">Subcarrier</span>
+<span class="text-xs font-bold text-stone-700">433.92/915 MHz</span>
+</div>
+</div>
+<!-- Primary Direct Link Control Actions -->
+<div class="mt-4 grid grid-cols-2 gap-3">
+<button class="py-2.5 px-3 rounded-lg border border-creme-300 bg-white hover:bg-creme-100 text-stone-800 text-xs font-bold font-mono tracking-tight transition flex items-center justify-center gap-1.5 shadow-sm" type="button">
+<svg class="w-3.5 h-3.5 text-stone-600" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+              Calibrate Optical Curve
+            </button>
+<button class="py-2.5 px-3 rounded-lg bg-amber-500 hover:bg-amber-600 text-stone-950 text-xs font-bold font-mono tracking-tight transition flex items-center justify-center gap-1.5 shadow-sm" type="button">
+<svg class="w-3.5 h-3.5 text-stone-900" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+              Trigger TR-400X Re-Sync
+            </button>
+</div>
+</div>
+</section>
+<!-- ==========================================
+           RIGHT COLUMN: CLOUD / WEB MULTISPECTRAL & TELEMETRY
+           ========================================== -->
+<section class="lg:col-span-7 flex flex-col gap-6" data-purpose="multispectral-processing-and-vitals">
+<!-- CARD 1: Multispectral Absorption & Assay Analysis -->
+<div class="bg-white rounded-xl border border-creme-300 shadow-sm p-5">
+<!-- Card Header with Alert Banner -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3.5 border-b border-creme-200 gap-2 mb-4">
+<div>
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+<h2 class="text-xs font-bold font-mono tracking-wider uppercase text-industrial-charcoal">
+                  Multispectral Absorption Spectrum (400nm - 1100nm NIR/VIS)
+                </h2>
+</div>
+<p class="text-[11px] text-stone-500 mt-0.5">
+                Concave Lens Optical Ingestion • Real-Time Shaft Assay Analysis
+              </p>
+</div>
+<div class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300 tracking-wide shadow-xs">
+<span class="w-2 h-2 rounded-full bg-amber-500 mr-1.5 pulse-dot"></span>
+              HIGH POTENTIAL GOLD VEIN DETECTED
+            </div>
+</div>
+<!-- SVG Multispectral Wave Chart Container -->
+<div class="bg-creme-50 rounded-lg p-3 border border-creme-300 mb-5 relative">
+<div class="flex justify-between text-[10px] font-mono text-stone-500 mb-1">
+<span>SPECTRAL ABSORBANCE (A.U.)</span>
+<span>CALIBRATION: #09-V CONCAVE MATRIX</span>
+</div>
+<!-- SVG Wave Graph -->
+<div class="w-full h-44 relative flex items-center justify-center">
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 700 200">
+<!-- Grid Lines -->
+<line stroke="#E6E2DA" stroke-dasharray="3,3" stroke-width="1" x1="0" x2="700" y1="40" y2="40"></line>
+<line stroke="#E6E2DA" stroke-dasharray="3,3" stroke-width="1" x1="0" x2="700" y1="80" y2="80"></line>
+<line stroke="#E6E2DA" stroke-dasharray="3,3" stroke-width="1" x1="0" x2="700" y1="120" y2="120"></line>
+<line stroke="#E6E2DA" stroke-dasharray="3,3" stroke-width="1" x1="0" x2="700" y1="160" y2="160"></line>
+<line stroke="#E6E2DA" stroke-width="1" x1="175" x2="175" y1="0" y2="190"></line>
+<line stroke="#E6E2DA" stroke-width="1" x1="350" x2="350" y1="0" y2="190"></line>
+<line stroke="#E6E2DA" stroke-width="1" x1="525" x2="525" y1="0" y2="190"></line>
+<!-- Gradient Definition for Spectral Area -->
+<defs>
+<lineargradient id="spectrumGradient" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#F59E0B" stop-opacity="0.38"></stop>
+<stop offset="60%" stop-color="#F59E0B" stop-opacity="0.10"></stop>
+<stop offset="100%" stop-color="#F59E0B" stop-opacity="0.0"></stop>
+</lineargradient>
+<lineargradient id="curveStroke" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" stop-color="#0284C7"></stop>
+<stop offset="45%" stop-color="#D97706"></stop>
+<stop offset="60%" stop-color="#E11D48"></stop>
+<stop offset="100%" stop-color="#4B5563"></stop>
+</lineargradient>
+</defs>
+<!-- Wave Path Area Fill -->
+<path d="M 0 170 
+                         C 80 165, 120 140, 160 140 
+                         C 210 140, 240 165, 280 150 
+                         C 310 140, 325 30, 350 25 
+                         C 375 20, 390 155, 430 160 
+                         C 480 165, 520 120, 570 125 
+                         C 620 130, 660 170, 700 170 
+                         L 700 190 L 0 190 Z" fill="url(#spectrumGradient)"></path>
+<!-- Wave Path Stroke Line -->
+<path d="M 0 170 
+                         C 80 165, 120 140, 160 140 
+                         C 210 140, 240 165, 280 150 
+                         C 310 140, 325 30, 350 25 
+                         C 375 20, 390 155, 430 160 
+                         C 480 165, 520 120, 570 125 
+                         C 620 130, 660 170, 700 170" fill="none" stroke="url(#curveStroke)" stroke-linecap="round" stroke-width="3"></path>
+<!-- Spike Focal Callout Point -->
+<circle cx="350" cy="25" fill="#D97706" r="5" stroke="#FFFFFF" stroke-width="2.5"></circle>
+<line stroke="#D97706" stroke-dasharray="2,2" stroke-width="1.5" x1="350" x2="350" y1="25" y2="190"></line>
+</svg>
+<!-- Absolute Overlay Annotation Flag for the Spike -->
+<div class="absolute top-2 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur px-2.5 py-1 rounded-md border border-amber-400 shadow-md flex items-center gap-1.5 pointer-events-none">
+<span class="w-2 h-2 rounded-full bg-amber-500"></span>
+<span class="text-[11px] font-mono font-bold text-industrial-charcoal">
+                  Au/Cu Absorption Spike @ 532nm <span class="text-amber-700 font-semibold">(Native Gold Signature)</span>
+</span>
+</div>
+</div>
+<!-- X-Axis Wavelength Indicators -->
+<div class="flex justify-between items-center text-[10px] font-mono text-stone-500 pt-1 border-t border-creme-300">
+<span>400nm (VIS-Blue)</span>
+<span>550nm (Green)</span>
+<span class="font-bold text-amber-700">700nm (NIR Start)</span>
+<span>900nm</span>
+<span>1100nm (Full NIR)</span>
+</div>
+</div>
+<!-- Optical Metrology Specs Bar -->
+<div class="grid grid-cols-3 gap-2 bg-stone-50 p-2.5 rounded-lg border border-stone-200 mb-5 text-center font-mono">
+<div>
+<span class="text-[10px] text-stone-500 block uppercase">Signal-to-Noise</span>
+<span class="text-xs font-bold text-stone-800">48.2 dB</span>
+</div>
+<div class="border-x border-stone-200">
+<span class="text-[10px] text-stone-500 block uppercase">Optical Exposure</span>
+<span class="text-xs font-bold text-stone-800">1/120s @ f/1.8</span>
+</div>
+<div>
+<span class="text-[10px] text-stone-500 block uppercase">Confidence Index</span>
+<span class="text-xs font-bold text-emerald-700">99.4% NOMINAL</span>
+</div>
+</div>
+<!-- Volumetric Mineral Breakdown Bars -->
+<div>
+<div class="flex justify-between items-center mb-3">
+<span class="text-xs font-bold font-mono tracking-wider text-industrial-charcoal uppercase">
+                Volumetric Assay Fractions &amp; Ore Specific Gravity
+              </span>
+<span class="text-[11px] font-mono text-stone-500">
+                Bulk Matrix Density: <strong class="text-stone-800">2.85 g/cm³</strong>
+</span>
+</div>
+<div class="space-y-3">
+<!-- Quartz (SiO2) -->
+<div class="bg-creme-50 p-2.5 rounded-lg border border-creme-200">
+<div class="flex justify-between text-xs font-mono mb-1">
+<span class="font-bold text-stone-800">Quartz (SiO₂)</span>
+<span class="font-semibold text-stone-600">45.0% <span class="text-[10px] text-stone-400">· 520 Fe ppm · 2.65 g/cm³</span></span>
+</div>
+<div class="w-full bg-creme-300 rounded-full h-2.5 overflow-hidden">
+<div class="bg-stone-500 h-2.5 rounded-full" style="width: 45.0%"></div>
+</div>
+</div>
+<!-- Pyrite (FeS2) -->
+<div class="bg-creme-50 p-2.5 rounded-lg border border-creme-200">
+<div class="flex justify-between text-xs font-mono mb-1">
+<span class="font-bold text-stone-800">Pyrite (FeS₂)</span>
+<span class="font-semibold text-stone-600">30.0% <span class="text-[10px] text-stone-400">· 8,500 Fe ppm · 5.01 g/cm³</span></span>
+</div>
+<div class="w-full bg-creme-300 rounded-full h-2.5 overflow-hidden">
+<div class="bg-amber-600 h-2.5 rounded-full" style="width: 30.0%"></div>
+</div>
+</div>
+<!-- Chalcopyrite (CuFeS2) -->
+<div class="bg-creme-50 p-2.5 rounded-lg border border-creme-200">
+<div class="flex justify-between text-xs font-mono mb-1">
+<span class="font-bold text-stone-800">Chalcopyrite (CuFeS₂)</span>
+<span class="font-semibold text-stone-600">15.0% <span class="text-[10px] text-stone-400">· 3,100 Fe ppm · 4.19 g/cm³</span></span>
+</div>
+<div class="w-full bg-creme-300 rounded-full h-2.5 overflow-hidden">
+<div class="bg-orange-500 h-2.5 rounded-full" style="width: 15.0%"></div>
+</div>
+</div>
+<!-- Native Gold (Au) Highlight Card -->
+<div class="bg-amber-50/80 p-3 rounded-lg border border-amber-300 shadow-sm relative overflow-hidden">
+<div class="absolute -right-2 -bottom-2 text-amber-200/60 select-none pointer-events-none font-mono font-black text-6xl">
+                  Au
+                </div>
+<div class="relative z-10">
+<div class="flex items-center justify-between text-xs font-mono mb-1.5">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+<span class="font-bold text-amber-950">Native Gold (Au)</span>
+<span class="bg-amber-200 text-amber-900 px-1.5 py-0.5 rounded text-[10px] font-bold">
+                        ECONOMIC PAY-DIRT ANOMALY
+                      </span>
+</div>
+<span class="font-extrabold text-amber-900 text-sm">
+                      0.100% <span class="text-[11px] font-normal text-amber-800">(1,000 ppm)</span>
+</span>
+</div>
+<div class="w-full bg-amber-200/80 rounded-full h-3 overflow-hidden p-0.5">
+<div class="bg-amber-500 h-full rounded-full transition-all duration-500 shadow-xs" style="width: 18%"></div>
+</div>
+<div class="flex justify-between items-center text-[10px] font-mono text-amber-800 pt-1.5">
+<span>Pure Density: <strong>19.32 g/cm³</strong></span>
+<span>Sample Ref: <strong>SHAFT-4A-SPEC-08</strong></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- CARD 2: Helmet Integrated Vitals & Operator Safety (STRICTLY 4 PARAMETERS) -->
+<div class="bg-white rounded-xl border border-creme-300 shadow-sm p-5" data-purpose="helmet-safety-vitals">
+<div class="flex items-center justify-between pb-3.5 border-b border-creme-200 mb-4">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+<h2 class="text-xs font-bold font-mono tracking-wider uppercase text-industrial-charcoal">
+                Helmet Integrated Vitals &amp; Operator Safety
+              </h2>
+</div>
+<span class="text-[11px] font-mono text-stone-500">
+              Station Link: <span class="font-semibold text-stone-800">HX-8492</span>
+</span>
+</div>
+<!-- Strictly 4 Parameters 2x2 Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Parameter 1: Oxygen (O2) -->
+<div class="bg-creme-50 rounded-xl p-4 border border-creme-300 flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-mono font-bold text-stone-600 uppercase tracking-wide">1. Oxygen (O₂)</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                  Nominal Level
+                </span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-black font-mono text-industrial-charcoal">20.8%</span>
+<span class="text-xs text-stone-500 font-mono">Atmospheric</span>
+</div>
+<div class="mt-3 flex items-center gap-2">
+<div class="w-full bg-creme-300 h-2 rounded-full overflow-hidden">
+<div class="bg-emerald-500 h-full rounded-full" style="width: 85%"></div>
+</div>
+<span class="text-[10px] font-mono text-emerald-700 font-semibold">Safe</span>
+</div>
+</div>
+<!-- Parameter 2: Battery Power -->
+<div class="bg-creme-50 rounded-xl p-4 border border-creme-300 flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-mono font-bold text-stone-600 uppercase tracking-wide">2. Battery Power</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                  18.4 hrs remaining · LiFePO4
+                </span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-black font-mono text-industrial-charcoal">94%</span>
+<span class="text-xs text-stone-500 font-mono">3.85V Stable</span>
+</div>
+<div class="mt-3 flex items-center gap-2">
+<div class="w-full bg-creme-300 h-2 rounded-full overflow-hidden">
+<div class="bg-emerald-500 h-full rounded-full" style="width: 94%"></div>
+</div>
+<span class="text-[10px] font-mono text-emerald-700 font-semibold">Healthy</span>
+</div>
+</div>
+<!-- Parameter 3: Carbon Monoxide (CO) -->
+<div class="bg-creme-50 rounded-xl p-4 border border-creme-300 flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-mono font-bold text-stone-600 uppercase tracking-wide">3. Carbon Monoxide (CO)</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                  Safe &lt; 25 ppm threshold
+                </span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-black font-mono text-industrial-charcoal">4.2</span>
+<span class="text-xs text-stone-500 font-mono">ppm TWA</span>
+</div>
+<div class="mt-3 flex items-center gap-2">
+<div class="w-full bg-creme-300 h-2 rounded-full overflow-hidden">
+<div class="bg-amber-500 h-full rounded-full" style="width: 17%"></div>
+</div>
+<span class="text-[10px] font-mono text-stone-600 font-semibold">4.2/25.0</span>
+</div>
+</div>
+<!-- Parameter 4: Dust Particles -->
+<div class="bg-creme-50 rounded-xl p-4 border border-creme-300 flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-mono font-bold text-stone-600 uppercase tracking-wide">4. Dust Particles</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-blue-100 text-blue-800 border border-blue-300">
+                  Low / Clear Airway Optical Path
+                </span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-black font-mono text-industrial-charcoal">12%</span>
+<span class="text-xs text-stone-500 font-mono">Obscuration</span>
+</div>
+<div class="mt-3 flex items-center gap-2">
+<div class="w-full bg-creme-300 h-2 rounded-full overflow-hidden">
+<div class="bg-sky-500 h-full rounded-full" style="width: 12%"></div>
+</div>
+<span class="text-[10px] font-mono text-sky-800 font-semibold">Clear</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ==========================================
+      BOTTOM ROW: CAMERA FEED & LOCATION TRACKING
+========================================== -->
+<section class="lg:col-span-12 grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+    <!-- Camera Feed Panel -->
+    <div class="bg-white rounded-xl border border-creme-300 shadow-sm p-5 flex flex-col h-full">
+        <div class="flex items-center justify-between pb-3.5 border-b border-creme-200 mb-4">
+            <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
+                <h2 class="text-xs font-bold font-mono tracking-wider uppercase text-industrial-charcoal">Live Helmet Cam</h2>
+            </div>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-stone-100 text-stone-600 border border-stone-300">1080p 60fps</span>
+        </div>
+        <div class="bg-stone-900 rounded-lg h-64 relative overflow-hidden flex items-center justify-center border-2 border-stone-800">
+            <!-- Simulated Camera Feed -->
+            <img src="https://images.unsplash.com/photo-1572005952086-63dbb1f49fa4?auto=format&fit=crop&w=800&q=80" alt="Cave View" class="w-full h-full object-cover opacity-80 mix-blend-luminosity">
+            <div class="absolute inset-0 bg-tech-grid opacity-30 pointer-events-none"></div>
+            <div class="absolute bottom-2 left-2 text-[10px] text-green-400 font-mono">REC [HX-8492]</div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-green-400/50 font-mono text-4xl pointer-events-none">+</div>
+        </div>
+    </div>
+
+    <!-- GPS Location Panel -->
+    <div class="bg-white rounded-xl border border-creme-300 shadow-sm p-5 flex flex-col h-full">
+        <div class="flex items-center justify-between pb-3.5 border-b border-creme-200 mb-4">
+            <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+                <h2 class="text-xs font-bold font-mono tracking-wider uppercase text-industrial-charcoal">Sub-Surface GPS / RFID</h2>
+            </div>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-blue-50 text-blue-700 border border-blue-200">Tracking Active</span>
+        </div>
+        <div class="bg-creme-50 rounded-lg h-64 p-4 border border-creme-300 relative flex flex-col justify-between">
+            <div class="space-y-2">
+                <div class="flex justify-between text-xs font-mono border-b border-creme-200 pb-1">
+                    <span class="text-stone-500">Current Zone:</span>
+                    <span class="font-bold text-stone-800">Shaft 4A, Sub-Level 3</span>
+                </div>
+                <div class="flex justify-between text-xs font-mono border-b border-creme-200 pb-1">
+                    <span class="text-stone-500">Coordinates:</span>
+                    <span class="font-bold text-stone-800">27.986° N, 76.388° E</span>
+                </div>
+                <div class="flex justify-between text-xs font-mono border-b border-creme-200 pb-1">
+                    <span class="text-stone-500">Depth:</span>
+                    <span class="font-bold text-amber-600">- 420 Meters</span>
+                </div>
+                <div class="flex justify-between text-xs font-mono border-b border-creme-200 pb-1">
+                    <span class="text-stone-500">Proximity Alert:</span>
+                    <span class="font-bold text-emerald-600">Clear (No heavy machinery)</span>
+                </div>
+            </div>
+            <!-- Simple Radar/Map graphic placeholder -->
+            <div class="mt-4 w-full h-24 bg-blue-900/10 rounded border border-blue-900/20 flex items-center justify-center relative overflow-hidden">
+                <div class="w-16 h-16 border-2 border-blue-400/40 rounded-full absolute"></div>
+                <div class="w-8 h-8 border-2 border-blue-400/60 rounded-full absolute"></div>
+                <div class="w-2 h-2 bg-blue-600 rounded-full absolute animate-pulse"></div>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: Footer -->
+<footer class="mt-auto border-t border-creme-300 bg-white py-3">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-[11px] font-mono text-stone-500 gap-2">
+<div class="flex items-center gap-3">
+<span>CONSOLESYNC CORE: <strong class="text-stone-700">ONLINE</strong></span>
+<span>•</span>
+<span>DISPATCH ID: <strong class="text-stone-700">DP-SHAFT-4A-09</strong></span>
+</div>
+<div>
+<span>HelmX Technologies Ltd. • High Precision Stope Telemetry System</span>
+</div>
+</div>
+</footer>
+<!-- END: Footer -->
+<script src="app.js"></script>
+</body></html>
